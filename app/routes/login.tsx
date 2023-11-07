@@ -12,7 +12,7 @@ import { validateEmail } from "~/utils";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Login",
+    title: "Entrar",
   };
 };
 
@@ -37,19 +37,19 @@ export const action: ActionFunction = async ({ request }) => {
   const remember = formData.get("remember");
 
   if (!validateEmail(email)) {
-    return json({ errors: { email: "Email is invalid." } }, { status: 400 });
+    return json({ errors: { email: "Email é invalido." } }, { status: 400 });
   }
 
   if (typeof password !== "string") {
     return json(
-      { errors: { password: "Valid password is required." } },
+      { errors: { password: "Insira uma senha válida." } },
       { status: 400 }
     );
   }
 
   if (password.length < 6) {
     return json(
-      { errors: { password: "Password is too short" } },
+      { errors: { password: "Senha muito curta" } },
       { status: 400 }
     );
   }
@@ -95,7 +95,7 @@ export default function Login() {
         <Form method="post" className="space-y-6" noValidate>
           <div>
             <label className="text-sm font-medium" htmlFor="email">
-              <span className="block text-gray-700">Email Address</span>
+              <span className="block text-gray-700">Endereço de Email</span>
               {actionData?.errors?.email && (
                 <span className="block pt-1 text-red-700" id="email-error">
                   {actionData?.errors?.email}
@@ -115,9 +115,9 @@ export default function Login() {
           </div>
           <div>
             <label className="text-sm font-medium" htmlFor="password">
-              <span className="block text-gray-700">Password</span>
+              <span className="block text-gray-700">Senha</span>
               <span className="block font-light text-gray-700">
-                Must have at least 6 characters.
+                Deve ter mais de 6 caracteres.
               </span>
               {actionData?.errors?.password && (
                 <span className="pt-1 text-red-700" id="password-error">
@@ -140,7 +140,7 @@ export default function Login() {
             className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
             type="submit"
           >
-            Log in
+            Entrar
           </button>
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <div className="flex items-center justify-between">
@@ -155,16 +155,16 @@ export default function Login() {
                 className="ml-2 block text-sm text-gray-900"
                 htmlFor="remember"
               >
-                Remember me
+                Lembrar de mim
               </label>
             </div>
             <div className="text-center text-sm text-gray-500">
-              Don't have an account?{" "}
+              Ainda não tem uma conta ?{" "}
               <Link
                 className="text-blue-500 underline"
                 to={{ pathname: "/join" }}
               >
-                Sign up
+                Cadastrar
               </Link>
             </div>
           </div>
