@@ -8,9 +8,9 @@ describe('empty spec', () => {
       email: 'test@example.com',
       password: 'test1234!',
     };
-    cy.findByRole("link", { name: /sign up/i }).click();
+    cy.findByRole("link", { name: /Cadastrar/i }).click();
     cy.findByRole("textbox", { name: /email/i }).type(loginForm.email);
-    cy.findByLabelText(/password/i).type(loginForm.password);
-    cy.findByRole("button", { name: /create account/i }).click();
+    cy.findByLabelText(/senha/i).type(loginForm.password);
+    cy.findByRole("button", { name: /Criar conta/i }).click();
   })
 }) 
