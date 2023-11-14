@@ -1,10 +1,12 @@
 import type { LoaderArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { json, redirect } from "@remix-run/node";
+import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import Menu from "~/components/menu";
 import type { Header } from "~/models/report.header.server";
 import { getReportHeaderListItems } from "~/models/report.header.server";
 import { requireUserId } from "~/session.server";
-import { useUser } from "~/utils";
+import { useLocation } from "@remix-run/react";
+import { createRelatorio } from "~/models/report.header.server";
 
 type LoaderData = {
   reportListItems: Header[];
@@ -18,20 +20,23 @@ export async function loader ({ request }: LoaderArgs) {
 
 export default function ReportsPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
+  const location = useLocation();
+  const novo = () => {
+    if ("new" != location.pathname.split("/")[1]) {
+      return <Link to="new" className="block p-4 text-xl text-blue-500">+ Novo Relatório:</Link>
+    } else {
+      return "null";
+    }
+  }
 
   return (
     <div className="flex h-full min-h-screen flex-col">
-      <Header />
+      <Menu />
       <main className="flex h-full bg-white">
-        <div className="h-full w-80 border-r bg-gray-50">
-          <Link to="new" className="block p-4 text-xl text-blue-500">
-            + Novo Relatório
-          </Link>
-
-          <hr />
+        <div className="h-full border-r bg-gray-50">
 
           {data.reportListItems.length === 0 ? (
-            <p className="p-4">vazio</p>
+           <div><Link to="new" className="block p-4 text-xl text-blue-500">+ Novo Relatório:</Link></div>
           ) : (
             <ol>
               {data.reportListItems.map((report) => (
@@ -49,31 +54,11 @@ export default function ReportsPage() {
             </ol>
           )}
         </div>
-
-        <div className="flex-1 p-6">
+      </main>
+      <div className="flex-1 p-6">
           <Outlet />
         </div>
-      </main>
     </div>
   );
 }
 
-function Header() {
-  const user = useUser();
-  return (
-    <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
-      <h1 className="text-3xl font-bold">
-        <Link to=".">Relatório</Link>
-      </h1>
-      <p>{user.email}</p>
-      <Form action="/logout" method="post">
-        <button
-          type="submit"
-          className="rounded bg-slate-600 py-2 px-4 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
-        >
-          Sair
-        </button>
-      </Form>
-    </header>
-  );
-}

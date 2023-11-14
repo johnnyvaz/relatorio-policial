@@ -28,28 +28,25 @@ export async function getReportHeaderListItems({ userId }: { userId: User["id"] 
     .from("report_header")
     .select("*")
     .eq("profile_id", userId);
-    if (!error) {
-      return data;
-    }
-  
-    return error;
+  if (!error) {
+    return data;
   }
+  return error;
+}
 
 export async function createRelatorio({
-  
+
   encarregado,
   userId,
-}: Pick<Header, "encarregado"  > & { userId: User["id"] }) {
+}: Pick<Header, "encarregado"> & { userId: User["id"] }) {
   const { data, error } = await supabase
     .from("report_header")
     .insert([{ encarregado, profile_id: userId }])
     .single();
 
   if (!error) {
-    console.log(" -- eu > " + data)
     return data;
   }
-  console.log(" -- eu > " + error)
   return error;
 }
 
@@ -103,6 +100,18 @@ export async function getReportHeader({
       encarregadoSeguinte: data.encarregadoSeguinte,
     };
   }
+}
 
+export async function updateReportHeader(id:string, userId: string, encarregado: string) {
+  const { data, error } = await supabase
+    .from("report_header")
+    .update({ encarregado: encarregado })
+    .match({profile_id: userId, id: id});
+
+  if (!error) {
+    return data;
+  }
   return null;
 }
+
+
