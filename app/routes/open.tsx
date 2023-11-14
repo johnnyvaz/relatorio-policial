@@ -25,7 +25,26 @@ export default function ReportsPage() {
   return (
     <div className="flex h-full min-h-screen flex-col">
       <Menu />
-      
+      <main className="flex h-full bg-white">
+          {data.reportListItems.length === 0 ? (
+           <div>Erro ,,,</div>
+          ) : (
+            <ol>
+              {data.reportListItems.map((report) => (
+                <li key={report.id}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                    }
+                    to={"/report/" + report.id}
+                  >
+                    📝 Abrir relatório 
+                  </NavLink>
+                </li>
+              ))}
+            </ol>
+          )}
+      </main>
       <div className="flex-1 p-6">
           <Outlet />
         </div>
