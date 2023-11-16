@@ -5,6 +5,7 @@ import invariant from "tiny-invariant";
 export type User = { 
   id: string;
   email: string 
+  phone: string;
 };
 
 // Abstract this away
@@ -66,4 +67,16 @@ export async function verifyLogin(email: string, password: string) {
   const profile = await getProfileByEmail(user?.email);
 
   return profile;
+}
+
+export async function updatePhone(id: string, phone: string) {
+  const { data, error } = await supabase
+    .from("profiles")
+    .update({ phone: phone })
+    .match({id});
+
+  if (!error) {
+    return data;
+  }
+  return error;
 }

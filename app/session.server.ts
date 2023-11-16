@@ -7,6 +7,11 @@ invariant(
   "SESSION_SECRET must be set in your environment variables."
 );
 
+export interface FlashMessage {
+  color: string;
+  text: string;
+}
+
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "__session",
@@ -102,4 +107,18 @@ export async function logout(request: Request) {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
   });
+}
+
+export async function getSessionFlash(request: Request) {
+  const session = await getSession(request);
+
+  const message: FlashMessage = {
+    color: session.get("messageColor"),
+    text: session.get("messageText"),
+  };
+  if (!message.color || !message.text) return null;
+
+  const headers = { "Set-Cookie": await sessionStorage.commitSession(session) };
+
+  return { message, headers };
 }
