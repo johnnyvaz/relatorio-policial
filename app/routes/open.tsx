@@ -75,11 +75,11 @@ export default function ReportsPage() {
               <li key={report.id}>
                 <NavLink
                   className={({ isActive }) =>
-                    `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
+                    `block border-b p-4 text-xl w-full ${isActive ? "bg-white" : ""}`
                   }
                   to={"/report/" + report.id}
                 >
-                  📝 Abrir relatório
+                  📝 Editar relatório
                 </NavLink>
               </li>
             ))}
