@@ -10,7 +10,9 @@
     # set TERM variable for terminal output
     TERM = "xterm"
 
-
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@remix-run/react"]
 
 [dev]
   command = "remix watch"
