@@ -14,7 +14,7 @@ export default function Menu() {
     // </header>
 
     <header>
-      <nav className="bg-white dark:bg-gray-800  shadow ">
+      <nav className="bg-cyan-600 dark:bg-gray-800  shadow ">
         <div className="px-8 mx-auto max-w-7xl">
           <div className="flex items-center justify-between h-16">
             <div className="w-full justify-between flex items-center">
@@ -22,7 +22,7 @@ export default function Menu() {
                 <img className="w-8 h-8" src={icone} alt="Workflow" />
               </a>
               <div >
-                <h3 className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                <h3 className=" uppercase text-black  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                   Relatório Policial</h3>
               </div>
               <div className="hidden md:block">
